@@ -1,0 +1,43 @@
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero__media" aria-hidden="true">
+    <video
+      #film
+      class="hero__video"
+      [autoplay]="!reducedMotion"
+      [muted]="true"
+      loop
+      playsinline
+      preload="metadata"
+      poster="/videos/earth-poster.jpg"
+    >
+      <source src="/videos/earth-hero-mobile.mp4" media="(max-width: 640px)" type="video/mp4" />
+      <source src="/videos/earth-hero-desktop.mp4" type="video/mp4" />
+    </video>
+  </div>
+  <div class="hero__shade" aria-hidden="true"></div>
+  <div class="hero__content">
+    <h1 id="hero-title">One planet.<br /><span>Countless stories.</span></h1>
+    <p class="hero__description">
+      Read the story of a changing Earth.<br />Explore global temperatures, trace historical
+      trends<br class="desktop-break" />
+      and turn scientific observations into understanding.
+    </p>
+    <div class="hero__actions">
+      <a routerLink="/explorer" class="hero__button"
+        >Explore the planet <span aria-hidden="true">↗</span></a
+      ><a routerLink="/dashboard" class="hero__secondary"
+        >Investigate the data <span aria-hidden="true">→</span></a
+      >
+    </div>
+  </div>
+  <div class="hero__footer">
+    <span>NASA POWER · NOAA REANALYSIS</span
+    ><button
+      (click)="toggleVideo(film)"
+      [attr.aria-pressed]="paused()"
+      aria-label="Pause or resume background video"
+    >
+      {{ paused() ? 'Play motion' : 'Pause motion' }}</button
+    ><span>SCROLL TO DISCOVER ↓</span>
+  </div>
+</section>

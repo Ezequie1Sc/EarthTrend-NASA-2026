@@ -1,0 +1,210 @@
+
+<main class="home">
+
+  <!-- ========================================
+       HERO PRINCIPAL
+       ======================================== -->
+  <app-hero />
+
+  <!-- ========================================
+       CINEMATIC INTRODUCTION
+       ======================================== -->
+  <section
+    class="introduction"
+    id="about"
+    aria-labelledby="introduction-title"
+  >
+
+    <div class="introduction__background" aria-hidden="true"></div>
+
+    <div class="introduction__container">
+
+      <div class="introduction__eyebrow">
+        <span class="home-eyebrow">
+          01 / A DIFFERENT PERSPECTIVE
+        </span>
+
+        <span class="introduction__eyebrow-line" aria-hidden="true"></span>
+      </div>
+
+      <div class="introduction__content">
+
+        <h2 id="introduction-title">
+          See the whole Earth.<br />
+          <span>Understand the local change.</span>
+        </h2>
+
+        <p>
+          From a daily view of global air temperature to decades
+          of observations at one location. EarthTrend connects
+          the big picture with the evidence behind it.
+        </p>
+
+        <a
+          href="#earth-explorer"
+          class="introduction__discover"
+          aria-label="Discover the interactive Earth observatory"
+        >
+          <span class="introduction__discover-icon" aria-hidden="true">
+            ↓
+          </span>
+
+          <span>
+            DISCOVER THE OBSERVATORY
+          </span>
+        </a>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ========================================
+       INTERACTIVE EARTH EXPLORER
+       ======================================== -->
+  <section
+    id="earth-explorer"
+    class="home-workspace"
+    aria-labelledby="explorer-heading"
+  >
+
+    <div class="section-heading">
+
+      <div>
+        <span class="home-eyebrow">
+          02 / INTERACTIVE OBSERVATORY
+        </span>
+
+        <h2 id="explorer-heading">
+          A world to investigate.
+        </h2>
+      </div>
+
+      <a
+        routerLink="/explorer"
+        class="section-heading__link"
+      >
+        Open full explorer
+        <span aria-hidden="true">↗</span>
+      </a>
+
+    </div>
+
+    <div class="home-embedded-workspace">
+
+      @defer (on viewport) {
+
+        <app-earth-explorer />
+
+      } @placeholder {
+
+        <div class="home-placeholder">
+          <span class="home-eyebrow">
+            EARTH EXPLORER
+          </span>
+
+          <p>
+            Move closer. Choose a place. Follow the evidence.
+          </p>
+        </div>
+
+      } @loading {
+
+        <div class="home-placeholder" role="status">
+          Preparing Earth Explorer…
+        </div>
+
+      } @error {
+
+        <div class="home-placeholder" role="alert">
+          Unable to load explorer.
+
+          <a routerLink="/explorer">
+            Try the explorer page →
+          </a>
+        </div>
+
+      }
+
+    </div>
+
+  </section>
+
+  <!-- ========================================
+       CLIMATE ANALYSIS
+       ======================================== -->
+  <section
+    class="analysis-feature"
+    id="climate-dashboard"
+    aria-labelledby="analysis-heading"
+  >
+
+    <div class="analysis-feature__content">
+
+      <span class="home-eyebrow">
+        03 / FROM OBSERVATION TO INSIGHT
+      </span>
+
+      <h2 id="analysis-heading">
+        Climate is a pattern.<br />
+        Find it in the data.
+      </h2>
+
+      <p>
+        Investigate annual temperatures from NASA POWER.
+        Compare places and historical periods, inspect regression
+        statistics, and export the evidence.
+      </p>
+
+      <a
+        routerLink="/dashboard"
+        class="feature-link"
+      >
+        <span>Open climate workspace</span>
+        <span aria-hidden="true">↗</span>
+      </a>
+
+    </div>
+
+    <ol class="analysis-feature__steps">
+
+      <li>
+        <span>01</span>
+
+        <div>
+          <h3>Choose a location</h3>
+          <p>
+            Select a place on the globe or enter exact coordinates.
+          </p>
+        </div>
+      </li>
+
+      <li>
+        <span>02</span>
+
+        <div>
+          <h3>Trace the trend</h3>
+          <p>
+            Explore annual observations alongside a fitted linear trend.
+          </p>
+        </div>
+      </li>
+
+      <li>
+        <span>03</span>
+
+        <div>
+          <h3>Question the result</h3>
+          <p>
+            Compare periods, inspect uncertainty and read
+            the scientific limitations.
+          </p>
+        </div>
+      </li>
+
+    </ol>
+
+  </section>
+
+</main>

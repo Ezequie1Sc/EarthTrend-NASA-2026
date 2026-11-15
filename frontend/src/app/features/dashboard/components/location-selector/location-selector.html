@@ -1,0 +1,206 @@
+<section
+  class="w-full min-w-0 rounded-md border border-white/15 bg-[#191c1c] p-5 text-white sm:p-6"
+>
+  <!-- HEADER -->
+  <div class="mb-6">
+    <p class="text-xs font-semibold uppercase tracking-[0.18em] text-stone-300">Climate Analysis</p>
+
+    <h2 class="mt-2 text-lg font-semibold">Explore climate data</h2>
+
+    <p class="mt-2 text-sm leading-6 text-slate-400">
+      Select a location and historical period to investigate temperature trends.
+    </p>
+  </div>
+
+  <form (ngSubmit)="submitAnalysis()">
+    <!-- ADAPTIVE FORM GRID -->
+    <div
+      [class]="
+        horizontal()
+          ? 'grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-4 xl:items-end'
+          : 'grid grid-cols-1 gap-5'
+      "
+    >
+      <!-- LOCATION -->
+      <div class="min-w-0">
+        <label [for]="idPrefix + '-location'" class="mb-2 block text-xs font-medium text-slate-200">
+          Location
+        </label>
+
+        <select
+          [id]="idPrefix + '-location'"
+          name="location"
+          [ngModel]="selectedCity()"
+          (ngModelChange)="onCityChange($event)"
+          class="h-11 w-full min-w-0 rounded-lg border border-white/15 bg-[#191c1c] px-3 text-sm text-white outline-none focus:border-white/15 focus:ring-2 focus:ring-sky-500/20"
+        >
+          @for (city of cities; track city.id) {
+            <option [value]="city.id">
+              {{ city.label }}
+            </option>
+          }
+          <option value="custom">Custom coordinates</option>
+        </select>
+      </div>
+
+      <!-- COORDINATES -->
+      <div class="min-w-0">
+        <p
+          class="mb-2 text-xs font-semibold uppercase tracking-wider text-stone-300"
+          [class.hidden]="!horizontal()"
+        >
+          Coordinates
+        </p>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div class="min-w-0">
+            <label
+              [for]="idPrefix + '-latitude'"
+              class="mb-2 block text-xs font-medium text-slate-200"
+            >
+              Latitude
+            </label>
+
+            <input
+              [id]="idPrefix + '-latitude'"
+              name="latitude"
+              type="number"
+              step="any"
+              min="-90"
+              max="90"
+              required
+              [ngModel]="latitude()"
+              (ngModelChange)="onLatitudeChange($event)"
+              class="h-11 w-full min-w-0 rounded-lg border border-white/15 bg-[#191c1c] px-3 text-sm text-white outline-none focus:border-white/15"
+            />
+          </div>
+
+          <div class="min-w-0">
+            <label
+              [for]="idPrefix + '-longitude'"
+              class="mb-2 block text-xs font-medium text-slate-200"
+            >
+              Longitude
+            </label>
+
+            <input
+              [id]="idPrefix + '-longitude'"
+              name="longitude"
+              type="number"
+              step="any"
+              min="-180"
+              max="180"
+              required
+              [ngModel]="longitude()"
+              (ngModelChange)="onLongitudeChange($event)"
+              class="h-11 w-full min-w-0 rounded-lg border border-white/15 bg-[#191c1c] px-3 text-sm text-white outline-none focus:border-white/15"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- HISTORICAL PERIOD -->
+      <div class="min-w-0">
+        <p class="mb-2 text-xs font-semibold uppercase tracking-wider text-stone-300">
+          Historical period
+        </p>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div class="min-w-0">
+            <label
+              [for]="idPrefix + '-start-year'"
+              class="mb-2 block text-xs font-medium text-slate-200"
+            >
+              Start year
+            </label>
+
+            <input
+              [id]="idPrefix + '-start-year'"
+              name="startYear"
+              [disabled]="!!fixedPeriod()"
+              type="number"
+              min="1981"
+              [max]="maxYear"
+              step="1"
+              required
+              [ngModel]="startYear()"
+              (ngModelChange)="startYear.set($event)"
+              class="h-11 w-full min-w-0 rounded-lg border border-white/15 bg-[#191c1c] px-3 text-sm text-white outline-none focus:border-white/15"
+            />
+          </div>
+
+          <div class="min-w-0">
+            <label
+              [for]="idPrefix + '-end-year'"
+              class="mb-2 block text-xs font-medium text-slate-200"
+            >
+              End year
+            </label>
+
+            <input
+              [id]="idPrefix + '-end-year'"
+              name="endYear"
+              [disabled]="!!fixedPeriod()"
+              type="number"
+              min="1981"
+              [max]="maxYear"
+              step="1"
+              required
+              [ngModel]="endYear()"
+              (ngModelChange)="endYear.set($event)"
+              class="h-11 w-full min-w-0 rounded-lg border border-white/15 bg-[#191c1c] px-3 text-sm text-white outline-none focus:border-white/15"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- ANALYZE BUTTON -->
+      <div class="flex min-w-0 flex-col justify-end">
+        @if (horizontal()) {
+          <p class="mb-2 text-xs font-semibold uppercase tracking-wider text-stone-300">
+            Run analysis
+          </p>
+        }
+
+        <button
+          type="submit"
+          [disabled]="!isValid()"
+          class="flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-white/5 px-4 text-sm font-semibold text-white transition hover:bg-white/5 disabled:cursor-not-allowed disabled:opacity-40"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="17"
+            height="17"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M3 3v18h18" />
+            <path d="m7 15 4-4 3 3 6-7" />
+          </svg>
+          Analyze climate trends
+        </button>
+      </div>
+    </div>
+
+    @if (!isValid()) {
+      <p
+        role="alert"
+        class="mt-4 rounded-lg border border-amber-900/60 bg-amber-950/20 px-4 py-3 text-xs text-amber-200"
+      >
+        {{ validationMessage() }}
+      </p>
+    }
+
+    <div
+      class="mt-5 flex flex-wrap justify-between gap-2 border-t border-white/15 pt-4 text-xs text-slate-500"
+    >
+      <span>Annual temperature observations</span>
+      <span>NASA POWER</span>
+    </div>
+  </form>
+</section>

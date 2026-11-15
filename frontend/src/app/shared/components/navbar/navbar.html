@@ -1,0 +1,100 @@
+<header class="navbar" [class.navbar--scrolled]="scrolled()">
+  <div class="navbar__inner">
+    <div class="navbar__left">
+      <a
+        routerLink="/"
+        class="navbar__brand"
+        aria-label="EarthTrend NASA Home"
+        (click)="closeMenu()"
+      >
+        <img src="/logo/nasa-logo.webp" alt="" width="42" height="42" />
+
+        <span>EarthTrend</span>
+      </a>
+
+      <span class="navbar__divider"></span>
+
+      <nav class="navbar__desktop-links" aria-label="Main navigation">
+        <a
+          routerLink="/"
+          ariaCurrentWhenActive="page"
+          routerLinkActive="navbar__link--active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="navbar__link"
+        >
+          Home
+        </a>
+
+        <a
+          routerLink="/explorer"
+          ariaCurrentWhenActive="page"
+          routerLinkActive="navbar__link--active"
+          class="navbar__link"
+        >
+          Explorer
+        </a>
+
+        <a
+          routerLink="/dashboard"
+          ariaCurrentWhenActive="page"
+          routerLinkActive="navbar__link--active"
+          class="navbar__link"
+        >
+          Dashboard
+        </a>
+      </nav>
+    </div>
+
+    <div class="navbar__right">
+      <a routerLink="/explorer" class="navbar__action">
+        Launch Explorer
+        <span aria-hidden="true">↗</span>
+      </a>
+
+      <button
+        type="button"
+        class="navbar__menu-button"
+        [attr.aria-expanded]="menuOpen()"
+        aria-controls="navbar-mobile-menu"
+        [attr.aria-label]="menuOpen() ? 'Close menu' : 'Open menu'"
+        (click)="toggleMenu()"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </div>
+
+  @if (menuOpen()) {
+    <nav id="navbar-mobile-menu" class="navbar__mobile-menu" aria-label="Mobile navigation">
+      <a
+        routerLink="/"
+        ariaCurrentWhenActive="page"
+        routerLinkActive="navbar__mobile-link--active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        (click)="closeMenu()"
+      >
+        Home
+      </a>
+
+      <a
+        routerLink="/explorer"
+        ariaCurrentWhenActive="page"
+        routerLinkActive="navbar__mobile-link--active"
+        (click)="closeMenu()"
+      >
+        Earth Explorer
+      </a>
+
+      <a
+        routerLink="/dashboard"
+        ariaCurrentWhenActive="page"
+        routerLinkActive="navbar__mobile-link--active"
+        (click)="closeMenu()"
+      >
+        Climate Dashboard
+      </a>
+    </nav>
+  }
+</header>

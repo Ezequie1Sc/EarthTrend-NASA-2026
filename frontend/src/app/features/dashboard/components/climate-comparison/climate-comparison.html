@@ -1,0 +1,124 @@
+<section aria-label="Scientific interpretation">
+  <h3>Scientific interpretation · location A</h3>
+  <p>
+    {{ data().latitude | number: '1.2-2' }}°, {{ data().longitude | number: '1.2-2' }}° ·
+    {{ data().start_year }}–{{ data().end_year }} · NASA POWER T2M
+  </p>
+  <p>
+    The mean annual temperature is {{ average() | number: '1.2-2' }} °C. Annual means range from
+    {{ minimum() | number: '1.2-2' }} to {{ maximum() | number: '1.2-2' }} °C. The fitted linear
+    trend is {{ data().slope_celsius_per_decade | number: '1.2-2' }} °C per decade ({{
+      data().slope_celsius_per_year > 0
+        ? 'positive'
+        : data().slope_celsius_per_year < 0
+          ? 'negative'
+          : 'zero'
+    }}).
+  </p>
+  <p>
+    {{
+      data().significant
+        ? 'The ordinary least squares test gives p < 0.05.'
+        : 'The test does not establish a nonzero trend at p < 0.05; this is not evidence of climate stability.'
+    }}
+    This descriptive association does not identify a cause. Serial correlation and short records
+    limit the inference. Min/max refer to annual averages, not daily extremes.
+  </p>
+</section>
+<section>
+  <h3>Compare historical periods · location A</h3>
+  <p>
+    Choose two non-overlapping, equal-length periods (at least 3 years) within the analyzed series.
+    Short periods are not standard 30-year climate normals.
+  </p>
+  <div class="fields">
+    <label>A start<input type="number" [(ngModel)]="a0" aria-label="Period A start" /></label>
+    <label>A end<input type="number" [(ngModel)]="a1" aria-label="Period A end" /></label>
+    <label>B start<input type="number" [(ngModel)]="b0" aria-label="Period B start" /></label>
+    <label>B end<input type="number" [(ngModel)]="b1" aria-label="Period B end" /></label>
+  </div>
+  <button (click)="comparePeriods()">Compare periods</button>
+  @if (periodError()) {
+    <p role="alert">{{ periodError() }}</p>
+  }
+  @if (periodResult(); as r) {
+    <p aria-live="polite">
+      A: {{ r.a | number: '1.2-2' }} °C · B: {{ r.b | number: '1.2-2' }} °C · B − A:
+      {{ r.delta | number: '1.2-2' }} °C · Absolute difference:
+      {{ r.absolute | number: '1.2-2' }} °C.
+    </p>
+  }
+  <p>
+    Historical trend: {{ data().slope_celsius_per_decade | number: '1.2-2' }} °C/decade. No
+    percentage is computed on the Celsius scale.
+  </p>
+</section>
+<section>
+  <h3>Compare locations A and B</h3>
+  <p>
+    A is the analysis above. Select B on the globe with “Select B”, or enter B below. B uses the
+    same period {{ data().start_year }}–{{ data().end_year }}, variable and units as A; the year
+    controls below are locked for this comparison.
+  </p>
+  <app-location-selector
+    [coordinates]="coordinatesB()"
+    [fixedPeriod]="data()"
+    (coordinatesChange)="manualB($event)"
+    (analyze)="compareLocation($event)"
+  />
+  @if (loading()) {
+    <p role="status">Loading location B from NASA POWER…</p>
+  }
+  @if (error()) {
+    <p role="alert">{{ error() }}</p>
+  }
+  @if (other(); as b) {
+    <p>
+      A mean: {{ average() | number: '1.2-2' }} °C · B mean: {{ otherMean() | number: '1.2-2' }} °C
+      · B − A: {{ otherMean() - average() | number: '1.2-2' }} °C.
+    </p>
+    <p>
+      Trends: A {{ data().slope_celsius_per_decade | number: '1.2-2' }} / B
+      {{ b.slope_celsius_per_decade | number: '1.2-2' }} °C per decade.
+    </p>
+    <app-climate-chart [data]="data()" [comparison]="b" />
+  }
+</section>
+<section id="methodology">
+  <h3>Methodology and limitations</h3>
+  <p>
+    NASA POWER (Prediction Of Worldwide Energy Resources) supplies T2M, modeled air temperature at 2
+    m, in °C. We use the API annual aggregate (YYYY13) and require every requested year. POWER
+    aggregates monthly products into annual products; EarthTrend does not reconstruct an annual
+    value from partial months. Meteorology derives from MERRA-2, approximately 0.5° latitude ×
+    0.625° longitude. Coordinates select a grid cell, not an exact point measurement.
+  </p>
+  <p>
+    Ordinary least squares fits T = intercept + slope × year. The slope is multiplied by 10 for
+    °C/decade. Period means are arithmetic averages of annual values; differences are B − A. R²
+    describes fit and the two-sided p-value tests zero slope under regression assumptions.
+    Autocorrelation is not corrected and no causal attribution is attempted. For a constant series,
+    slope = 0, p = 1 and R² = 0 are display conventions; variance-based R² is undefined.
+  </p>
+  <p>
+    The globe defaults to daily NOAA/NCEP–NCAR R1 data (~1.9° Gaussian grid); optional MERRA-2
+    layers require imported files. A daily map is not the annual POWER series. Colors saturate
+    outside −20 to 40 °C; missing cells are transparent. Interpolation is visual, not additional
+    measured resolution.
+  </p>
+  <p>
+    <a
+      href="https://power.larc.nasa.gov/docs/services/api/temporal/monthly/"
+      target="_blank"
+      rel="noopener"
+      >NASA POWER API documentation</a
+    >
+    ·
+    <a
+      href="https://psl.noaa.gov/data/gridded/data.ncep.reanalysis.html"
+      target="_blank"
+      rel="noopener"
+      >NOAA source</a
+    >
+  </p>
+</section>

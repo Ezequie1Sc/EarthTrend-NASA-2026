@@ -1,0 +1,581 @@
+
+<main class="earth-page">
+
+  <!-- IMMERSIVE EARTH WORKSPACE -->
+  <section
+    class="earth-workspace"
+    [class.is-immersive]="immersive()"
+    aria-label="3D Earth explorer"
+  >
+
+    <!-- TOP CONTROLS -->
+    <header class="explorer-bar">
+
+      <span class="eyebrow explorer-brand">
+        EARTH OBSERVATORY
+      </span>
+
+      <nav
+        class="panel-controls"
+        aria-label="Observation panel visibility"
+      >
+        <button
+          type="button"
+          (click)="togglePanel('left')"
+          [attr.aria-expanded]="leftPanelVisible()"
+          aria-controls="exploration-panel"
+        >
+          {{ leftPanelVisible() ? 'Hide' : 'Show' }}
+          exploration
+        </button>
+
+        <button
+          type="button"
+          (click)="togglePanel('right')"
+          [attr.aria-expanded]="rightPanelVisible()"
+          aria-controls="climate-panel"
+        >
+          {{ rightPanelVisible() ? 'Hide' : 'Show' }}
+          overview
+        </button>
+
+        <button
+          type="button"
+          class="view-button"
+          (click)="toggleImmersive()"
+          [attr.aria-pressed]="immersive()"
+        >
+          {{
+            immersive()
+              ? 'Restore both panels'
+              : 'Immersive view'
+          }}
+        </button>
+      </nav>
+
+      <!-- ACTIVE SELECTION -->
+      <div
+        class="point-switcher"
+        role="group"
+        aria-label="Active observation point"
+      >
+        <button
+          type="button"
+          [class.active]="selectionTarget() === 'A'"
+          [attr.aria-pressed]="selectionTarget() === 'A'"
+          (click)="selectionTarget.set('A')"
+        >
+          <span class="point-dot point-a"></span>
+          POINT A
+        </button>
+
+        <button
+          type="button"
+          [class.active]="selectionTarget() === 'B'"
+          [attr.aria-pressed]="selectionTarget() === 'B'"
+          (click)="selectionTarget.set('B')"
+        >
+          <span class="point-dot point-b"></span>
+          POINT B
+        </button>
+      </div>
+
+    </header>
+
+    <!-- FULL-SCREEN 3D GLOBE -->
+    <div class="globe-stage">
+      <div class="globe-renderer">
+        <app-earth-globe
+          [latitude]="selectedCoordinates()?.latitude ?? 19.845"
+          [longitude]="selectedCoordinates()?.longitude ?? -90.523"
+          [locationB]="coordinatesB()"
+          (locationSelected)="onLocationSelected($event)"
+        />
+      </div>
+    </div>
+
+    <!-- COLLAPSIBLE LEFT PANEL -->
+    <aside
+      id="exploration-panel"
+      class="left-panel glass-panel"
+      [hidden]="!leftPanelVisible()"
+      aria-label="Exploration"
+    >
+
+      <button
+        class="panel-close"
+        type="button"
+        (click)="togglePanel('left')"
+        aria-label="Hide exploration panel"
+      >
+        ×
+      </button>
+
+      <div class="panel-heading">
+        <span class="eyebrow">
+          01 / EXPLORATION
+        </span>
+
+        <h1>Explore our planet.</h1>
+
+        <p>
+          Navigate Earth and investigate global
+          temperature observations.
+        </p>
+      </div>
+
+      <div class="side-divider"></div>
+
+      <div class="control-section">
+        <span class="eyebrow">
+          GEOGRAPHIC SELECTION
+        </span>
+
+        <h2>Observation points</h2>
+
+        <p class="muted">
+          Double-click or long-press the globe
+          to select a geographic location.
+        </p>
+
+        <p class="active-selection">
+          Selecting point {{ selectionTarget() }}.
+          Use the A/B controls above to change
+          the active observation point.
+        </p>
+      </div>
+
+      <div class="left-panel-bottom">
+        <span class="status-dot"></span>
+        <span>INTERACTIVE OBSERVATORY</span>
+      </div>
+
+    </aside>
+
+    <!-- PERSISTENT COORDINATES -->
+    <section
+      class="coordinate-hud"
+      aria-label="Current geographic coordinates"
+      aria-live="polite"
+    >
+
+      <div class="coordinate-hud__header">
+        <span class="eyebrow">
+          CURRENT COORDINATES
+        </span>
+
+        <span class="coordinate-hud__status">
+          LIVE SELECTION
+        </span>
+      </div>
+
+      <div class="coordinate-hud__points">
+
+        <!-- POINT A -->
+        <div
+          class="coordinate-hud__point"
+          [class.is-active]="selectionTarget() === 'A'"
+        >
+
+          <div class="coordinate-hud__name">
+            <span class="coordinate-hud__dot point-a"></span>
+            <span>POINT A</span>
+          </div>
+
+          @if (selectedCoordinates(); as pointA) {
+
+            <div class="coordinate-hud__value">
+              <strong>
+                {{ pointA.latitude | number: '1.3-3' }}°
+              </strong>
+              <small>LATITUDE</small>
+            </div>
+
+            <div class="coordinate-hud__value">
+              <strong>
+                {{ pointA.longitude | number: '1.3-3' }}°
+              </strong>
+              <small>LONGITUDE</small>
+            </div>
+
+          } @else {
+
+            <p class="coordinate-hud__empty">
+              Not selected
+            </p>
+
+          }
+
+        </div>
+
+        <!-- POINT B -->
+        <div
+          class="coordinate-hud__point"
+          [class.is-active]="selectionTarget() === 'B'"
+        >
+
+          <div class="coordinate-hud__name">
+            <span class="coordinate-hud__dot point-b"></span>
+            <span>POINT B</span>
+          </div>
+
+          @if (coordinatesB(); as pointB) {
+
+            <div class="coordinate-hud__value">
+              <strong>
+                {{ pointB.latitude | number: '1.3-3' }}°
+              </strong>
+              <small>LATITUDE</small>
+            </div>
+
+            <div class="coordinate-hud__value">
+              <strong>
+                {{ pointB.longitude | number: '1.3-3' }}°
+              </strong>
+              <small>LONGITUDE</small>
+            </div>
+
+          } @else {
+
+            <p class="coordinate-hud__empty">
+              Not selected
+            </p>
+
+          }
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- COLLAPSIBLE RIGHT PANEL -->
+    <aside
+      id="climate-panel"
+      class="right-panel glass-panel"
+      [hidden]="!rightPanelVisible()"
+      aria-label="Climate overview"
+    >
+
+      <button
+        class="panel-close"
+        type="button"
+        (click)="togglePanel('right')"
+        aria-label="Hide climate overview panel"
+      >
+        ×
+      </button>
+
+      <div class="right-header">
+        <span class="eyebrow">
+          02 / EARTH OBSERVATION
+        </span>
+
+        <h2>Climate overview</h2>
+
+        <p>
+          Explore environmental observations
+          and temperature trends.
+        </p>
+      </div>
+
+      <div class="side-divider"></div>
+
+      <div class="observation-block">
+        <span class="eyebrow">
+          VISUALIZATION
+        </span>
+
+        <strong>Interactive 3D Earth</strong>
+
+        <span class="observation-subtitle">
+          Surface imagery / daily thermal layers
+        </span>
+      </div>
+
+      <div class="side-divider"></div>
+
+      <div class="observation-block">
+        <span class="eyebrow">
+          TEMPERATURE LAYER
+        </span>
+
+        <strong>Global daily mean</strong>
+
+        <span class="observation-subtitle">
+          2-meter air temperature
+        </span>
+      </div>
+
+      <div class="side-divider"></div>
+
+      <div class="observation-block">
+        <span class="eyebrow">
+          SCIENTIFIC DATA
+        </span>
+
+        <strong>NASA POWER</strong>
+
+        <span class="observation-subtitle">
+          Historical coordinate analysis
+        </span>
+
+        <p class="source-description">
+          Global reanalysis: NOAA / NCEP–NCAR
+          or imported NASA MERRA-2.
+        </p>
+      </div>
+
+      @if (analysis(); as result) {
+
+        <div class="side-divider"></div>
+
+        <div class="trend-display">
+          <span class="eyebrow">
+            LATEST CLIMATE TREND
+          </span>
+
+          <div class="trend-number">
+            {{
+              result.slope_celsius_per_decade
+                | number: '1.2-3'
+            }}
+            <small>°C / DECADE</small>
+          </div>
+
+          <span class="trend-description">
+            {{ result.trend }}
+          </span>
+        </div>
+
+      }
+
+      <div class="right-panel-bottom">
+        <span>
+          DATA-DRIVEN EARTH EXPLORATION
+        </span>
+
+        <span>2026</span>
+      </div>
+
+    </aside>
+
+  </section>
+
+  <!-- INFORMATION STRIP -->
+  <section class="information-strip">
+
+    <div class="strip-item">
+      <span class="strip-number">01</span>
+
+      <div>
+        <strong>Global coverage</strong>
+        <span>
+          Earth observation and reanalysis
+        </span>
+      </div>
+    </div>
+
+    <div class="strip-item">
+      <span class="strip-number">02</span>
+
+      <div>
+        <strong>Historical trends</strong>
+        <span>
+          NASA POWER climate observations
+        </span>
+      </div>
+    </div>
+
+    <div class="strip-item">
+      <span class="strip-number">03</span>
+
+      <div>
+        <strong>Scientific analysis</strong>
+        <span>
+          Linear regression and comparison
+        </span>
+      </div>
+    </div>
+
+    <a href="#climate-analysis" class="strip-action">
+      EXPLORE DATA
+      <span aria-hidden="true">↗</span>
+    </a>
+
+  </section>
+
+  <!-- SCIENTIFIC WORKSPACE -->
+  <section
+    id="climate-analysis"
+    class="analysis-section"
+    aria-labelledby="analysis-heading"
+  >
+
+    <div class="analysis-heading">
+      <div>
+        <span class="eyebrow">
+          03 / SCIENTIFIC WORKSPACE
+        </span>
+
+        <h2 id="analysis-heading">
+          Climate Analysis
+        </h2>
+
+        <p>
+          Investigate historical temperature observations,
+          compare locations and examine long-term trends.
+        </p>
+      </div>
+
+      <span class="analysis-source">
+        NASA POWER / ANNUAL OBSERVATIONS
+      </span>
+    </div>
+
+    <div
+      class="analysis-layout"
+      [class.chart-expanded]="chartExpanded()"
+    >
+
+      <div class="analysis-selector">
+        <app-location-selector
+          [coordinates]="selectedCoordinates()"
+          (coordinatesChange)="onManualA($event)"
+          [horizontal]="chartExpanded()"
+          (analyze)="analyzeClimate($event)"
+        />
+      </div>
+
+      <div class="analysis-results">
+
+        @if (loading()) {
+
+          <div
+            class="analysis-placeholder"
+            role="status"
+          >
+            <div class="loading-spinner"></div>
+
+            <h3>Analyzing climate data</h3>
+
+            <p>
+              Retrieving NASA POWER observations
+              and calculating statistical trends.
+            </p>
+          </div>
+
+        } @else if (error()) {
+
+          <div
+            class="analysis-placeholder"
+            role="alert"
+          >
+            <span class="eyebrow">
+              DATA REQUEST FAILED
+            </span>
+
+            <h3>Analysis unavailable</h3>
+
+            <p>{{ error() }}</p>
+          </div>
+
+        } @else if (analysis(); as result) {
+
+          <app-climate-chart
+            [data]="result"
+            [expanded]="chartExpanded()"
+            (expandedChange)="chartExpanded.set($event)"
+          />
+
+        } @else {
+
+          <div class="analysis-placeholder">
+            <span class="placeholder-symbol">
+              ◎
+            </span>
+
+            <span class="eyebrow">
+              READY FOR EXPLORATION
+            </span>
+
+            <h3>Discover climate trends.</h3>
+
+            <p>
+              Select a geographic location and
+              historical period to begin scientific analysis.
+            </p>
+          </div>
+
+        }
+
+      </div>
+
+    </div>
+
+    @if (analysis(); as result) {
+
+      <section class="insights-section">
+
+        <div class="analysis-heading">
+          <div>
+            <span class="eyebrow">
+              04 / STATISTICAL INTERPRETATION
+            </span>
+
+            <h2>Climate Insights</h2>
+
+            <p>
+              Regression analysis for
+              {{ result.start_year }}–{{ result.end_year }}.
+            </p>
+          </div>
+        </div>
+
+        <app-trend-summary [data]="result" />
+
+        <div class="comparison-section">
+          <app-climate-comparison
+            [data]="result"
+            [coordinatesB]="coordinatesB()"
+            [onManualB]="setManualB"
+          />
+        </div>
+
+        <div class="methodology">
+          <span class="eyebrow">
+            SCIENTIFIC METHODOLOGY
+          </span>
+
+          <h3>Understanding the results</h3>
+
+          <p>
+            NASA POWER annual temperature reanalysis
+            values are evaluated using linear regression.
+            The slope estimates temperature change per decade.
+          </p>
+
+          <p>
+            R² describes the proportion of observed variation
+            explained by the model. Statistical significance
+            is evaluated using the p-value.
+          </p>
+
+          <p class="methodology-status">
+            @if (result.significant) {
+              The estimated linear trend is statistically
+              significant at the 0.05 threshold.
+            } @else {
+              No statistically significant linear trend
+              was detected for the selected period.
+              This does not establish temperature stability.
+            }
+          </p>
+        </div>
+
+      </section>
+
+    }
+
+  </section>
+
+</main>

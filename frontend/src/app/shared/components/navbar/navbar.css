@@ -1,0 +1,113 @@
+:host {
+  display: block;
+}
+.navbar {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 100;
+  background: rgba(16, 18, 18, 0.92);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--line);
+}
+.navbar__inner {
+  height: 76px;
+  padding: 0 var(--space);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+.navbar__left,
+.navbar__right,
+.navbar__brand,
+.navbar__desktop-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+.navbar__brand {
+  gap: 12px;
+  text-decoration: none;
+  font-size: 20px;
+  letter-spacing: -0.04em;
+  font-weight: 600;
+}
+.navbar__brand img {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+}
+.navbar__divider {
+  height: 24px;
+  width: 1px;
+  background: var(--line);
+}
+.navbar__link {
+  font-size: 13px;
+  text-decoration: none;
+  color: var(--muted);
+  padding: 28px 0;
+  border-bottom: 2px solid transparent;
+}
+.navbar__link--active {
+  color: var(--ink);
+  border-bottom-color: var(--accent);
+}
+.navbar__link:hover {
+  color: white;
+}
+.navbar__action {
+  display: flex;
+  gap: 24px;
+  border: 1px solid var(--line);
+  padding: 10px 16px;
+  border-radius: 4px;
+  font-size: 12px;
+  text-decoration: none;
+}
+.navbar__action:hover {
+  background: var(--raised);
+}
+.navbar__menu-button {
+  display: none;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--line);
+  background: none;
+  padding: 10px;
+}
+.navbar__menu-button span {
+  display: block;
+  height: 1px;
+  background: var(--ink);
+  margin: 5px 0;
+}
+.navbar__mobile-menu {
+  padding: 8px 20px 20px;
+  display: flex;
+  flex-direction: column;
+}
+.navbar__mobile-menu a {
+  padding: 14px 0;
+  text-decoration: none;
+  color: var(--muted);
+  border-bottom: 1px solid var(--line);
+}
+.navbar__mobile-menu .navbar__mobile-link--active {
+  color: var(--ink);
+}
+@media (max-width: 760px) {
+  .navbar__desktop-links,
+  .navbar__divider,
+  .navbar__action {
+    display: none;
+  }
+  .navbar__menu-button {
+    display: block;
+  }
+}
+@media (max-width: 640px) {
+  .navbar__inner {
+    height: 68px;
+  }
+}

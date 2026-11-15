@@ -1,0 +1,462 @@
+
+:host {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+}
+
+/* ==========================================
+   GLOBE CONTAINER
+   ========================================== */
+
+.globe-shell,
+.viewport,
+.canvas-host {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.globe-shell {
+  overflow: hidden;
+  color: var(--ink, #e8ebed);
+}
+
+.viewport {
+  overflow: hidden;
+}
+
+.canvas-host {
+  overflow: hidden;
+  touch-action: pan-y;
+}
+
+.canvas-host canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: pan-y !important;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* ==========================================
+   THERMAL CONTROLS
+   ========================================== */
+
+app-thermal-controls {
+  position: absolute;
+  z-index: 8;
+
+  top: 75px;
+  right: 22px;
+
+  width: min(310px, calc(100% - 44px));
+  max-width: 100%;
+}
+
+/* ==========================================
+   CAMERA CONTROLS
+   ========================================== */
+
+.camera-controls {
+  position: absolute;
+  z-index: 9;
+
+  right: 22px;
+  bottom: 22px;
+
+  display: flex;
+  gap: 1px;
+
+  overflow: hidden;
+
+  background: rgba(9, 13, 17, 0.65);
+
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.camera-controls button {
+  width: 40px;
+  height: 40px;
+
+  padding: 0;
+
+  color: #e8edf0;
+  background: transparent;
+
+  border: 0;
+
+  font-size: 20px;
+  cursor: pointer;
+
+  touch-action: manipulation;
+}
+
+.camera-controls button + button {
+  border-left: 1px solid rgba(255, 255, 255, 0.13);
+}
+
+.camera-controls button:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.camera-controls button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ==========================================
+   CANVAS LABEL
+   ========================================== */
+
+.canvas-label {
+  position: absolute;
+  z-index: 3;
+
+  top: 85px;
+  left: 22px;
+
+  color: #aeb8c0;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+
+  pointer-events: none;
+}
+
+.canvas-label span {
+  display: block;
+
+  margin-top: 5px;
+
+  color: #d6dde2;
+  font-size: 11px;
+  letter-spacing: 0;
+}
+
+/* ==========================================
+   PROCESSING / ERRORS
+   ========================================== */
+
+.processing {
+  position: absolute;
+  z-index: 10;
+
+  left: 50%;
+  bottom: 210px;
+
+  transform: translateX(-50%);
+
+  width: max-content;
+  max-width: 80%;
+
+  padding: 10px 14px;
+
+  color: #e9edf0;
+  background: rgba(9, 13, 17, 0.8);
+
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  font-size: 11px;
+  text-align: center;
+
+  pointer-events: none;
+}
+
+.canvas-error {
+  position: absolute;
+  z-index: 10;
+
+  top: 40%;
+  left: 20%;
+  right: 20%;
+
+  padding: 24px;
+
+  color: #f3c6c6;
+  background: rgba(9, 13, 17, 0.9);
+
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+
+  text-align: center;
+}
+
+/* ==========================================
+   THERMAL LEGEND
+   ========================================== */
+
+.globe-footer {
+  position: absolute;
+  z-index: 7;
+
+  left: 50%;
+  bottom: 20px;
+
+  transform: translateX(-50%);
+
+  width: min(340px, calc(100% - 680px));
+  min-width: 240px;
+  max-height: 195px;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  padding: 13px 15px;
+
+  color: #e7ecef;
+  background: rgba(9, 13, 17, 0.58);
+
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 10px;
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.16);
+
+  scrollbar-width: thin;
+}
+
+.legend {
+  min-width: 0;
+}
+
+.legend-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+
+  color: #b8c1c8;
+  font-size: 11px;
+}
+
+.colorbar {
+  height: 8px;
+  margin: 10px 0 6px;
+  border-radius: 3px;
+}
+
+.ticks {
+  display: flex;
+  justify-content: space-between;
+  gap: 3px;
+
+  color: #d5dce1;
+  font-size: 10px;
+
+  font-variant-numeric: tabular-nums;
+}
+
+.legend p,
+.provenance,
+.interaction {
+  color: #aeb8c0;
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+.legend p {
+  margin: 8px 0 0;
+}
+
+.provenance,
+.interaction {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.provenance small {
+  font-size: 10px;
+}
+
+.interaction strong {
+  color: #e8edf0;
+  font-weight: 400;
+}
+
+/* ==========================================
+   COLLAPSIBLE DETAILS
+   ========================================== */
+
+details {
+  margin-top: 5px;
+}
+
+summary {
+  min-height: 28px;
+  padding: 6px 0;
+
+  color: #b6c0c7;
+  font-size: 10px;
+
+  cursor: pointer;
+}
+
+summary:hover {
+  color: #ffffff;
+}
+
+/* ==========================================
+   TABLET
+   ========================================== */
+
+@media (max-width: 1100px) {
+  .globe-footer {
+    left: 50%;
+    right: auto;
+
+    width: 250px;
+    min-width: 0;
+
+    transform: translateX(-50%);
+  }
+}
+
+/* ==========================================
+   MOBILE / TABLET
+   ========================================== */
+
+@media (max-width: 900px) {
+  .canvas-host,
+  .canvas-host canvas {
+    touch-action: pan-y !important;
+  }
+
+  app-thermal-controls {
+    top: 75px;
+    right: 12px;
+
+    width: min(290px, calc(100% - 24px));
+  }
+
+  .canvas-label {
+    display: none;
+  }
+
+  .globe-footer {
+    left: auto;
+    right: 12px;
+    bottom: 155px;
+
+    transform: none;
+
+    width: min(270px, calc(100% - 24px));
+    min-width: 0;
+    max-height: 165px;
+  }
+
+  .camera-controls {
+    right: 12px;
+    bottom: 12px;
+
+    flex-direction: column;
+  }
+
+  .camera-controls button + button {
+    border-left: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.13);
+  }
+
+  .processing {
+    bottom: 340px;
+    font-size: 10px;
+  }
+
+  .canvas-error {
+    left: 8%;
+    right: 8%;
+  }
+}
+
+/* ==========================================
+   SMALL MOBILE
+   ========================================== */
+
+@media (max-width: 600px) {
+  :host {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .globe-shell {
+    overflow: hidden;
+  }
+
+  .viewport,
+  .canvas-host {
+    width: 100%;
+    height: 100%;
+  }
+
+  .canvas-host,
+  .canvas-host canvas {
+    touch-action: pan-y !important;
+  }
+
+  app-thermal-controls {
+    top: 80px;
+    right: 12px;
+
+    width: min(280px, calc(100% - 24px));
+  }
+
+  .globe-footer {
+    right: 12px;
+    bottom: 150px;
+
+    width: min(240px, calc(100% - 24px));
+    max-height: 135px;
+
+    padding: 10px;
+  }
+
+  .legend-heading,
+  .ticks {
+    font-size: 9px;
+  }
+
+  .camera-controls {
+    right: 12px;
+    bottom: 12px;
+  }
+
+  .camera-controls button {
+    width: 36px;
+    height: 36px;
+  }
+
+  .processing {
+    bottom: 300px;
+  }
+}
+
+/* ==========================================
+   ACCESSIBILITY
+   ========================================== */
+
+.camera-controls button:focus-visible,
+summary:focus-visible {
+  outline: 2px solid #e2e8ec;
+  outline-offset: -3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .camera-controls button {
+    transition: none;
+  }
+}

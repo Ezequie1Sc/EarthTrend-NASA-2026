@@ -1,0 +1,122 @@
+@import 'tailwindcss';
+@import './styles/scientific.css';
+:root {
+  color-scheme: dark;
+  --bg: #101212;
+  --surface: #191c1c;
+  --raised: #222626;
+  --ink: #f1f2ed;
+  --muted: #a7afac;
+  --line: rgba(228, 237, 232, 0.15);
+  --accent: #c4cdb5;
+  --glass: rgba(23, 27, 26, 0.82);
+  --radius: 6px;
+  --space: clamp(20px, 4vw, 64px);
+  font-family: Inter, 'Segoe UI', sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  min-width: 320px;
+}
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px;
+}
+button,
+input,
+select {
+  font: inherit;
+}
+button,
+a,
+input,
+select {
+  touch-action: manipulation;
+}
+button {
+  cursor: pointer;
+}
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+a {
+  color: inherit;
+}
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+input,
+select {
+  color-scheme: dark;
+  max-width: 100%;
+}
+button,
+a {
+  transition:
+    background 0.2s,
+    color 0.2s,
+    border-color 0.2s;
+}
+::selection {
+  background: #c4cdb5;
+  color: #101212;
+}
+app-root {
+  display: block;
+  padding-top: 76px;
+}
+.eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+.skip-link {
+  position: fixed;
+  top: -80px;
+  left: 20px;
+  z-index: 200;
+  background: var(--ink);
+  color: var(--bg);
+  padding: 12px;
+}
+.skip-link:focus {
+  top: 12px;
+}
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+@media (max-width: 640px) {
+  app-root {
+    padding-top: 68px;
+  }
+}
