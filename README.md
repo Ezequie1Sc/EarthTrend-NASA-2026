@@ -1,151 +1,513 @@
 # EarthTrend NASA
 
-**Team Feynman · NASA Space Apps Challenge 2026**  
-Challenge: **Be An Earth System Trend Detective!**
+**Explore Earth. Understand Climate. Discover Trends.**
 
-EarthTrend connects a 3D Earth explorer with reproducible temperature analysis. It helps students and curious citizens move from a geographic question to historical evidence, while distinguishing gridded reanalysis from point measurements and statistical trends from causal claims.
+An interactive Earth science platform combining a 3D globe, historical climate data, statistical analysis, and scientific visualizations to make climate trends easier to explore and understand.
 
-## Corrección actual del Explorer
+**Team Feynman | NASA Space Apps Challenge 2026**
 
-Consulta [INFORME_EXPLORER_INMERSIVO.md](INFORME_EXPLORER_INMERSIVO.md): escena continua, paneles opcionales, cámara y A/B. Este informe sustituye la descripción anterior del Explorer en tres columnas.
+[Live Application](https://earth-trend-nasa-2026.vercel.app/) · [GitHub Repository](https://github.com/Ezequie1Sc/EarthTrend-NASA-2026) · [API Documentation](https://earthtrend-nasa-2026.onrender.com/docs) · [Team Feynman](https://www.spaceappschallenge.org/2026/find-a-team/feynman/)
 
-## Rediseño visual — noviembre 2026
+---
 
-Consulta [INFORME_REDISENO.md](INFORME_REDISENO.md) para cambios e instalación y [docs/VERIFICATION.md](docs/VERIFICATION.md) para resultados y limitaciones de esta entrega.
+## Overview
 
-## Problem and solution
+![EarthTrend NASA — Homepage](frontend/public/prueba/hero.png)
 
-Climate data are public but often difficult to locate, interpret and compare. A colorful daily map can also be mistaken for evidence of a long-term trend. EarthTrend separates those questions: use a daily global layer for geographic context, then explicitly request an annual NASA POWER series for a chosen location and period.
+EarthTrend NASA is a web-based Earth observation and climate analysis platform developed for the **NASA Space Apps Challenge 2026**, addressing the challenge **Be An Earth System Trend Detective!**
 
-## Features implemented
+The platform transforms complex environmental datasets into an accessible experience where users can explore the planet, investigate historical temperature observations, compare geographic locations, and understand long-term climate trends.
 
-- Three.js globe with orbit/zoom, desktop double-click and 650 ms touch hold. Movement greater than 8 px or another pointer cancels the hold.
-- A/B location selection with cyan/orange markers; coordinates also remain editable manually. Selecting a point does not run historical analysis.
-- NASA POWER T2M annual series, OLS trend, mean, minimum/maximum annual mean, R² and p-value.
-- Responsive Chart.js axes and two-decimal tooltips, expand/fullscreen controls retained.
-- Non-overlapping, equal-length period comparison (at least three complete years each), signed B − A and absolute differences in °C.
-- Two-location comparison using the same variable, years and units, with two annual series and two fitted trends on one chart.
-- CSV export of the displayed annual values, coordinates, variable, units and source; PNG composition includes title, years, units, coordinates and provenance.
-- Scientific explanation and source limitations in the analysis results.
-- Existing daily thermal archive, worker rasterization, date/source controls, retry states, caching and optional MERRA-2 import retained.
+Rather than presenting climate data as isolated numbers, EarthTrend connects geographic exploration with statistical evidence.
 
-Implementation is not a claim of device certification: see [verification and remaining checks](docs/VERIFICATION.md).
+The application is designed for students, educators, developers, researchers, and anyone interested in understanding Earth's changing climate.
 
-## Architecture
+### The Challenge
 
-The original Angular standalone feature structure and FastAPI separation are preserved. No database or authentication is added.
+Climate datasets are publicly available, but understanding them often requires specialized tools, scientific knowledge, and familiarity with data-processing workflows.
+
+EarthTrend addresses three key challenges:
+
+- **Accessibility:** Making scientific climate information easier to explore.
+- **Interpretability:** Turning environmental observations into understandable visualizations.
+- **Scientific context:** Distinguishing daily temperature distributions from long-term climate trends.
+
+Our goal is to make climate exploration interactive without compromising scientific transparency.
+
+---
+
+## Explore the Platform
+
+### 01 — Interactive Earth Explorer
+
+![Interactive Earth Explorer](frontend/public/prueba/cuatro.png)
+
+Explore Earth through an interactive 3D globe developed with Three.js and WebGL.
+
+The explorer integrates geographic visualization, temperature overlays, coordinate selection, and camera controls into a responsive interface.
+
+**Capabilities**
+
+- Interactive globe rotation and zoom.
+- Global temperature visualization.
+- Geographic coordinate selection.
+- Country boundary overlays.
+- Responsive interaction for desktop and mobile.
+- Configurable thermal visualization.
+- Immersive exploration with optional interface panels.
+
+### 02 — Global Temperature Visualization
+
+![Global Temperature Visualization](frontend/public/prueba/cuatro2.png)
+
+The thermal visualization uses gridded atmospheric reanalysis data to display geographic temperature patterns.
+
+Users can examine daily temperature distributions, adjust overlay opacity, and explore the relationship between geographic position and atmospheric conditions.
+
+The temperature scale ranges from **−20 °C to 40 °C**, with saturated endpoints.
+
+Missing observations remain transparent rather than being replaced with invented values.
+
+### 03 — Climate Dashboard
+
+![Climate Dashboard](frontend/public/prueba/analiza.png)
+
+The climate dashboard provides a dedicated workspace for investigating historical temperature behavior.
+
+Users can select geographic coordinates and analysis periods to retrieve annual temperature observations from NASA POWER.
+
+The dashboard presents climate indicators alongside interactive visualizations and statistical summaries.
+
+### 04 — Historical Temperature Trends
+
+![Historical Temperature Analysis](frontend/public/prueba/analize1.png)
+
+EarthTrend analyzes annual mean air temperature at two meters above the surface.
+
+Historical observations are used to calculate linear temperature trends and describe changes over the selected period.
+
+The analysis includes:
+
+- Annual mean temperature.
+- Minimum and maximum annual means.
+- Linear regression trend.
+- Temperature change per decade.
+- Coefficient of determination (R²).
+- Statistical significance (p-value).
+
+The platform distinguishes statistical associations from causal explanations.
+
+### 05 — Climate Insights
+
+![Climate Insights](frontend/public/prueba/climateinsights.png)
+
+Climate Insights presents calculated results through accessible scientific explanations.
+
+Instead of displaying statistics without context, EarthTrend explains what the results represent and identifies relevant methodological limitations.
+
+The interpretations are based on calculated values rather than AI-generated climate observations.
+
+### 06 — Climate Patterns
+
+![Climate Patterns](frontend/public/prueba/climateispatterns.png)
+
+Explore temporal patterns through historical observations, trend visualizations, and comparative indicators.
+
+The interface is designed to help users distinguish short-term variability from longer-term temperature behavior.
+
+---
+
+## Climate Comparison Tools
+
+### 07 — Compare Historical Periods
+
+![Historical Period Comparison](frontend/public/prueba/chartTrenCompare.png)
+
+EarthTrend allows users to compare two non-overlapping historical periods using the same temperature variable.
+
+Each period must contain at least three complete years, and both periods must have equal duration.
+
+The comparison includes period means, signed differences, and absolute temperature differences.
+
+The signed difference is calculated as:
+
+**Temperature difference = Period B mean − Period A mean**
+
+All temperature differences are expressed in degrees Celsius.
+
+### 08 — Compare Geographic Locations
+
+![Compare Two Locations](frontend/public/prueba/compareAandB.png)
+
+Select two geographic locations and compare their historical temperature observations.
+
+EarthTrend uses the same variable, period, and measurement units for both locations.
+
+The resulting visualization displays both annual series and their fitted trends.
+
+### 09 — Location A and Location B
+
+![Geographic Location Comparison](frontend/public/prueba/compareLocationA.png)
+
+Geographic coordinates can be selected interactively or entered manually.
+
+The globe uses distinct markers to identify locations A and B, allowing users to maintain geographic context while examining statistical differences.
+
+Selecting a location does not automatically initiate historical analysis. Data retrieval is performed when the user requests it.
+
+### 10 — Comparative Analysis
+
+![Climate Comparison Results](frontend/public/prueba/compare1.png)
+
+Comparison results provide a structured interpretation of differences between geographic locations or historical periods.
+
+These tools are intended to support exploration and education, not to establish causal climate attribution.
+
+---
+
+## Scientific Methodology
+
+![Scientific Methodology](frontend/public/prueba/methodologyandlimition.png)
+
+EarthTrend is designed around reproducible statistical calculations and clearly identified scientific data sources.
+
+### Data Sources
+
+| Source | Purpose | Data |
+|---|---|---|
+| NASA POWER | Historical climate analysis | Annual mean T2M temperature |
+| NOAA NCEP–NCAR Reanalysis 1 | Default globe temperature layer | Daily mean air temperature at 2 m |
+| NASA MERRA-2 | Optional thermal dataset | Imported daily mean T2M |
+
+**NASA POWER**
+
+NASA POWER provides the historical temperature observations used for annual trend analysis.
+
+EarthTrend uses the annual aggregate supplied by the POWER monthly endpoint rather than fabricating missing observations.
+
+**NOAA NCEP–NCAR Reanalysis 1**
+
+The default thermal layer uses gridded atmospheric reanalysis data.
+
+Its native grid contains 192 × 94 cells, with approximately 1.9° spatial resolution.
+
+**NASA MERRA-2**
+
+MERRA-2 is supported as an optional imported dataset. It is not available in the globe until the required daily data have been imported.
+
+### Linear Trend Analysis
+
+EarthTrend applies ordinary least squares regression to annual mean temperature observations:
+
+**T = a + b × year**
+
+The temperature trend per decade is calculated as:
+
+**Trend (°C/decade) = 10 × b**
+
+Where:
+
+- **T:** Annual mean temperature.
+- **a:** Regression intercept.
+- **b:** Estimated annual temperature slope.
+
+The platform also reports R² and a two-sided p-value under the assumptions of ordinary least squares.
+
+Statistical significance does not establish causality, and a nonsignificant result should not be interpreted as proof of climate stability.
+
+### Scientific Limitations
+
+EarthTrend explicitly recognizes that:
+
+- Reanalysis data combine numerical models and observations.
+- Gridded temperatures do not represent exact point measurements.
+- Short historical periods do not constitute 30-year climate normals.
+- Linear trends do not capture every form of climate variability.
+- Statistical results do not establish the causes of temperature changes.
+- Historical data can be revised by their providers.
+- The current regression does not adjust uncertainty for annual autocorrelation.
+
+### Scientific References
+
+- [NASA POWER — Monthly and Annual API](https://power.larc.nasa.gov/docs/services/api/temporal/monthly/)
+- [NASA POWER — Temporal Processing](https://power.larc.nasa.gov/docs/methodology/data/processing/)
+- [NASA POWER — Meteorological Data Sources](https://power.larc.nasa.gov/docs/methodology/data/sources_meteorology/)
+- [NOAA — NCEP/NCAR Reanalysis](https://psl.noaa.gov/data/gridded/data.ncep.reanalysis.html)
+- [NASA MERRA-2](https://doi.org/10.5067/VJAFPLI1CSIV)
+
+---
+
+## Data Export
+
+### CSV Export
+
+![CSV Export](frontend/public/prueba/exceldownload.png)
+
+EarthTrend supports CSV export of the displayed annual observations, including geographic coordinates, temperature values, variable information, measurement units, and source metadata.
+
+### Data Inspection
+
+![Exported Climate Data](frontend/public/prueba/excelmuestra.png)
+
+Exported observations can be inspected using spreadsheet software or incorporated into external analytical workflows.
+
+### PNG Export
+
+![Chart Export](frontend/public/prueba/fotoer1.png)
+
+Users can export composed chart images containing the visualization, title, analysis period, geographic coordinates, units, and scientific provenance.
+
+---
+
+## Technology Stack
+
+EarthTrend uses a modular frontend and backend architecture.
+
+| Layer | Technologies |
+|---|---|
+| Frontend | Angular 22, TypeScript, Tailwind CSS |
+| 3D Visualization | Three.js, WebGL |
+| Charts | Chart.js |
+| Reactive Programming | RxJS |
+| Backend | Python, FastAPI |
+| HTTP Integration | HTTPX |
+| Scientific Computing | NumPy, SciPy, xarray |
+| Frontend Hosting | Vercel |
+| Backend Hosting | Render |
+| Version Control | Git, GitHub |
+
+### Architecture
 
 ```text
-frontend/src/app/
-  core/models/             API contracts
-  core/services/           ClimateApiService, TemperatureGridService, API_URL
-  core/utils/              period statistics and CSV/download utilities
-  features/earth-explorer/ globe, thermal controls, integrated explorer
-  features/dashboard/     form, chart, trend cards, comparison component
-backend/app/
-  api/routes/              health, climate, analysis, thermal
-  schemas/                 Pydantic response contracts
-  services/                POWER retrieval, scipy regression, thermal ingestion/cache
-backend/data/examples/     two real NOAA daily grids with provenance
-backend/scripts/           optional MERRA-2 importer
+EarthTrend-NASA-2026/
+├── frontend/
+│   ├── public/
+│   └── src/
+│       └── app/
+│           ├── core/
+│           │   ├── models/
+│           │   ├── services/
+│           │   └── utils/
+│           ├── features/
+│           │   ├── home/
+│           │   ├── earth-explorer/
+│           │   └── dashboard/
+│           └── shared/
+│
+├── backend/
+│   ├── app/
+│   │   ├── api/
+│   │   │   └── routes/
+│   │   ├── schemas/
+│   │   └── services/
+│   ├── data/
+│   └── scripts/
+│
+└── README.md
 ```
 
-Angular obtains one analysis response per location through `ClimateApiService`; that response supplies both the chart and statistics. Period comparisons reuse the displayed data, without fetching or fabricating new observations. The globe's thermal pipeline is independent of annual POWER analysis.
+The frontend is organized into reusable standalone Angular features.
 
-## Technologies
+FastAPI handles scientific data retrieval, validation, processing, and statistical analysis.
 
-Angular 22, TypeScript, Tailwind CSS, Three.js, Chart.js, RxJS; Python, FastAPI, HTTPX, SciPy, NumPy and xarray. Existing lockfiles and dependency versions are retained. No new production dependency was needed.
+The thermal globe pipeline and historical NASA POWER analysis are separate workflows.
 
-## Scientific sources and methodology
+The application does not require a database or user authentication.
 
-| View | Source | Variable and temporal meaning | Native resolution |
-| --- | --- | --- | --- |
-| Historical analysis | NASA POWER / MERRA-2 | T2M: annual mean air temperature at 2 m, °C | approximately 0.5° latitude × 0.625° longitude |
-| Default globe | NOAA PSL / NCEP–NCAR Reanalysis 1 | `air`: daily mean at 2 m, converted from K to °C | 192 × 94 Gaussian grid, 1.875° longitude, approximately 1.9° latitude |
-| Optional globe | NASA MERRA-2 M2T1NXSLV | T2M daily mean of all 24 hourly fields | 576 × 361, 0.625° longitude × 0.5° latitude |
+---
 
-POWER's monthly endpoint includes an annual aggregate under `YYYY13`. EarthTrend uses that supplied aggregate; POWER documents annual averages as means of monthly values. It does not fill missing years or infer annual values from incomplete months. Missing, nonnumeric, nonfinite and fill values cause an actionable error; T2M units must be Celsius. Analysis accepts completed years from 1981, subject to actual archive availability.
+## API
 
-For annual values `T` and years `y`, ordinary least squares fits `T = a + b*y`, with `b = Σ[(y−ȳ)(T−T̄)] / Σ[(y−ȳ)²]`. The reported decadal trend is `10*b`. Plot coefficients retain numerical precision; presentation rounds labels. R² describes the fitted fraction of variance. The two-sided p-value tests zero slope under OLS assumptions; annual autocorrelation is not corrected. Nonsignificance is labeled inconclusive, not climate stability. Constant series use slope 0, p 1 and displayed R² 0 by convention (variance-based R² is undefined).
+The backend exposes REST endpoints for climate exploration and analysis.
 
-Period means equally weight complete annual means. Both periods must have equal durations, at least three years and no overlap. Difference = B mean − A mean; absolute difference = its magnitude. No percentage is computed on Celsius. These short-period summaries are not 30-year climate normals. Location comparisons require identical year arrays.
+**Base URL**
 
-The thermal scale is shared by the raster and legend (−20 to 40 °C, saturated endpoints). Missing cells stay transparent; bilinear display resampling does not add scientific detail. NOAA polar caps extend the nearest latitude row for display. Temperatures describe grid cells, not exact measurements at the marker. Reanalysis combines models and observations; no causal climate attribution or prediction is made.
+https://earthtrend-nasa-2026.onrender.com
 
-Primary references checked during this audit:
+**Interactive API documentation**
 
-- [POWER monthly/annual API](https://power.larc.nasa.gov/docs/services/api/temporal/monthly/)
-- [POWER temporal processing](https://power.larc.nasa.gov/docs/methodology/data/processing/)
-- [POWER meteorological sources](https://power.larc.nasa.gov/docs/methodology/data/sources_meteorology/)
-- [NOAA NCEP–NCAR R1](https://psl.noaa.gov/data/gridded/data.ncep.reanalysis.html)
-- [MERRA-2 product](https://doi.org/10.5067/VJAFPLI1CSIV)
+https://earthtrend-nasa-2026.onrender.com/docs
 
-NOAA R1 ends on 2026-03-17. The two bundled grids are 2024-06-15 and 2024-12-15; they are real archived data, not simulated fallback temperatures. Other dates require upstream access. MERRA-2 is unavailable until a valid daily file is imported.
+### Available Endpoints
 
-## Run locally (PowerShell)
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/health` | API health |
+| GET | `/api/v1/climate/temperature` | Historical temperature observations |
+| GET | `/api/v1/analysis/trends` | Statistical trend analysis |
+| GET | `/api/v1/thermal/sources` | Available thermal datasets |
+| GET | `/api/v1/thermal/grid` | Daily temperature grid |
 
-Use Node 24 and Python 3.12+ with a virtual environment. The audit used Python 3.12.
+Example:
+
+```http
+GET /api/v1/thermal/grid?date=2024-06-15&provider=noaa
+```
+
+API responses depend on the availability of upstream scientific data services.
+
+---
+
+## Local Development
+
+### Requirements
+
+- Node.js 24
+- pnpm
+- Python 3.12 or later
+- Git
+
+### Clone the Repository
+
+```powershell
+git clone https://github.com/Ezequie1Sc/EarthTrend-NASA-2026.git
+cd EarthTrend-NASA-2026
+```
+
+### Start the Backend
 
 ```powershell
 cd backend
+
 python -m venv .venv
+
 .\.venv\Scripts\Activate.ps1
+
 python -m pip install -r requirements.txt
+
 python -m uvicorn app.main:app --reload --port 8000
 ```
 
-In a second terminal:
+### Start the Frontend
+
+Open another terminal:
 
 ```powershell
 cd frontend
-npm ci
-npm start
+
+pnpm install
+
+pnpm start
 ```
 
-Open `http://localhost:4200`. Local hosts use `/api/v1` through the existing Angular proxy to port 8000; production uses the Render URL in `frontend/src/app/core/services/api-url.ts`. No `.env` file was changed.
+Open:
 
-Tests and production build:
+http://localhost:4200
+
+The frontend can communicate with a locally running FastAPI instance through its configured development proxy or with the deployed Render API, depending on the active `API_URL` configuration.
+
+### Production Build
+
+```powershell
+cd frontend
+pnpm exec ng build
+```
+
+### Backend Tests
 
 ```powershell
 cd backend
 python -m pytest -q
-cd ../frontend
-npm test -- --watch=false
-npm run build
 ```
 
-Optional MERRA-2: download a complete M2T1NXSLV daily NetCDF using your own Earthdata access, then run `python scripts/import_merra2.py <file.nc4> --date YYYY-MM-DD` from `backend`. The importer requires all 24 hourly means and does not handle credentials. See [thermal source notes](docs/thermal/DATA_SOURCES.md).
+---
 
-## API routes
+## Deployment
 
-- `GET /health`
-- `GET /api/v1/climate/temperature?latitude=...&longitude=...&start_year=...&end_year=...`
-- `GET /api/v1/analysis/trends` with the same parameters
-- `GET /api/v1/thermal/sources`
-- `GET /api/v1/thermal/grid?date=YYYY-MM-DD&provider=noaa`
-- OpenAPI: `/docs`
+The application is deployed as two independent services.
 
-## Deployment and delivery
+**Frontend — Vercel**
 
-See [Vercel and Render instructions](docs/DEPLOYMENT.md) and the [NASA submission checklist](docs/NASA_CHECKLIST.md). This audit did not deploy, push to GitHub or submit the project.
+https://earth-trend-nasa-2026.vercel.app/
 
-Project links supplied by the project (not updated by this audit):
+**Backend — Render**
 
-- [Repository](https://github.com/Ezequie1Sc/EarthTrend-NASA)
-- [Frontend](https://earth-trend-nasa.vercel.app/)
-- [API](https://earthtrend-nasa-api.onrender.com/)
-- [API documentation](https://earthtrend-nasa-api.onrender.com/docs)
-- [Team Feynman](https://www.spaceappschallenge.org/2026/find-a-team/feynman/)
-- [Challenge](https://www.spaceappschallenge.org/2026/challenges/earth-system-trend-detective/)
+https://earthtrend-nasa-2026.onrender.com/
 
-## Known limitations
+**API Documentation**
 
-Browser visual QA and physical Android testing remain outstanding. Chromium launch was blocked by this execution environment; PNG encoding/download and WebGL interaction are implemented but not end-to-end verified here. PNG composition, gesture logic, coordinate synchronization, comparisons and CSV content have targeted automated tests. See the verification report for exact results and distinctions.
+https://earthtrend-nasa-2026.onrender.com/docs
 
-The UI retains English as in the original project. Requests depend on NASA/NOAA uptime; there is no simulated history fallback. Render cold starts can increase latency. MERRA-2 imported data are optional, no causal attribution is implemented, and no autocorrelation-adjusted trend uncertainty is provided. Source updates can revise historical values.
+Deployment configuration and additional operational details are documented in [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
 
-## AI assistance disclosure
+---
 
-ChatGPT/Codex assisted with code inspection, implementation, tests and documentation for this revision. Climate values come from the named scientific sources; generative AI does not generate temperatures or scientific interpretations. Interpretations are deterministic templates driven by calculated statistics. The developer remains responsible for reviewing the work and completing device checks before submission.
+## Interface Design
 
-Developer: Orlando Ezequiel Salazar Cruz ([Ezequie1Sc](https://github.com/Ezequie1Sc)). This is an independent participant project, not a NASA-endorsed product.
+EarthTrend follows a scientific dashboard design language emphasizing clarity, geographic context, responsive layouts, and readable data visualizations.
+
+![EarthTrend Interface](frontend/public/prueba/dos.png)
+
+The interface combines interactive visualizations with restrained colors, typography, layered surfaces, and modular information panels.
+
+### Additional Interface Details
+
+![EarthTrend Additional Interface](frontend/public/prueba/tres.png)
+
+### Footer and Project Information
+
+![EarthTrend Footer](frontend/public/prueba/footer1.png)
+
+![EarthTrend Footer Details](frontend/public/prueba/footer2.png)
+
+---
+
+## Current Limitations
+
+The project currently has several known limitations:
+
+- NASA MERRA-2 thermal visualization requires a valid dataset import.
+- Scientific requests depend on NASA and NOAA service availability.
+- Render cold starts can increase initial response times.
+- Mobile interactions require additional physical-device validation.
+- WebGL performance varies across devices.
+- No causal climate attribution or climate forecasting is implemented.
+- Statistical uncertainty is not adjusted for annual autocorrelation.
+
+The platform is intended for educational exploration and scientific data interpretation, not operational weather forecasting.
+
+---
+
+## NASA Space Apps Challenge 2026
+
+**Challenge:** Be An Earth System Trend Detective!
+
+**Team:** Feynman
+
+**Project:** EarthTrend NASA
+
+EarthTrend was developed as an independent participant project for NASA Space Apps Challenge 2026.
+
+The project demonstrates how open scientific datasets, interactive visualization, and modern web technologies can help make Earth system information more accessible.
+
+[View Team Feynman](https://www.spaceappschallenge.org/2026/find-a-team/feynman/)
+
+[Explore the NASA Space Apps Challenge](https://www.spaceappschallenge.org/2026/challenges/earth-system-trend-detective/)
+
+---
+
+## Development and AI Assistance
+
+AI-assisted development tools, including ChatGPT/Codex, supported parts of code inspection, implementation, testing, and technical documentation.
+
+Scientific observations originate from the cited NASA and NOAA datasets. Generative AI is not used to fabricate temperature measurements.
+
+Statistical calculations and explanatory interpretations are based on deterministic application logic.
+
+---
+
+## Developer
+
+**Orlando Ezequiel Salazar Cruz**
+
+Software Developer · Computer Systems Engineering
+
+GitHub: [Ezequie1Sc](https://github.com/Ezequie1Sc)
+
+Portfolio: [ezequiel-dev-ia.vercel.app](https://ezequiel-dev-ia.vercel.app/)
+
+---
+
+**EarthTrend NASA — Explore Earth. Understand Climate. Discover Trends.**
+
+*An independent NASA Space Apps Challenge participant project. Not an official NASA product or NASA-endorsed application.*
