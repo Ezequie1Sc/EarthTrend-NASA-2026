@@ -1,3 +1,4 @@
+
 import { InjectionToken } from '@angular/core';
 
 const API_BASE_URL =
@@ -5,5 +6,8 @@ const API_BASE_URL =
 
 export const API_URL = new InjectionToken<string>('API_URL', {
   providedIn: 'root',
-  factory: () => API_BASE_URL,
+
+  factory: () => {
+    return API_BASE_URL;
+  },
 });
