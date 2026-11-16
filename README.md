@@ -14,7 +14,7 @@
 [![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![NASA Space Apps](https://img.shields.io/badge/NASA-Space_Apps_2026-0B3D91)](https://www.spaceappschallenge.org/)
 
-[**Live Application**](https://earth-trend-nasa-2026-5hti.vercel.app/) · [**Video Demo**](https://www.youtube.com/watch?v=-lsbQbmuLBE) · [**API Documentation**](https://earthtrend-nasa-2026.onrender.com/docs) · [**Source Code**](https://github.com/Ezequie1Sc/EarthTrend-NASA-2026) · [**Team Feynman**](https://www.spaceappschallenge.org/2026/find-a-team/feynman/)
+[**Live Application**](https://earth-trend-nasa-2026-5hti.vercel.app/) · [**Video Demo**](https://www.youtube.com/watch?v=Vl-3_LMXeF4) · [**API Documentation**](https://earthtrend-nasa-2026.onrender.com/docs) · [**Source Code**](https://github.com/Ezequie1Sc/EarthTrend-NASA-2026) · [**Team Feynman**](https://www.spaceappschallenge.org/2026/find-a-team/feynman/)
 
 ---
 
@@ -26,9 +26,9 @@ Watch the demonstration of **EarthTrend NASA**, developed by **Team Feynman** fo
 
 The video presents the platform's interactive Earth visualization, climate exploration tools, historical temperature analysis, and scientific dashboard.
 
-[![Watch EarthTrend NASA Demo](https://img.youtube.com/vi/-lsbQbmuLBE/hqdefault.jpg)](https://www.youtube.com/watch?v=-lsbQbmuLBE)
+[![Watch EarthTrend NASA Demo](https://img.youtube.com/vi/-lsbQbmuLBE/hqdefault.jpg)](https://www.youtube.com/watch?v=Vl-3_LMXeF4)
 
-**[Watch the Full Demonstration on YouTube](https://www.youtube.com/watch?v=-lsbQbmuLBE)**
+**[Watch the Full Demonstration on YouTube](https://www.youtube.com/watch?v=Vl-3_LMXeF4)**
 
 **Live Application:** https://earth-trend-nasa-2026-5hti.vercel.app/
 
@@ -820,19 +820,19 @@ The following screenshots document the platform's interface and scientific explo
 
 ![Earth Explorer One](frontend/public/prueba/cuatro.png)
 
-![Earth Explorer Two](frontend/public/prueba/cuatro2.png)
+![Earth Explorer Two](frontend/public/prueba/cuatro4.2.png2
 
 ![Earth Explorer Three](frontend/public/prueba/cuatro.1.png)
 
 ### Historical Climate Analysis
 
-![Climate Dashboard](frontend/public/prueba/analiza.png)
+![Climate Dashboard](frontend/public/prueba/analize.png)
 
 ![Historical Analysis](frontend/public/prueba/analize1.png)
 
 ### Climate Insights
 
-![Climate Insights](frontend/public/prueba/climateinsights.png)
+![Climate Insights](frontend/public/prueba/climateinsigths.png)
 
 ![Climate Patterns](frontend/public/prueba/climateispatterns.png)
 
@@ -844,7 +844,6 @@ The following screenshots document the platform's interface and scientific explo
 
 ![Location Selection](frontend/public/prueba/compareLocationA.png)
 
-![Comparison Results](frontend/public/prueba/compare1.png)
 
 ### Data Export
 
@@ -916,7 +915,7 @@ Communicate statistical results with appropriate scientific context.
 ### Project Links
 
 - **Live Application:** https://earth-trend-nasa-2026-5hti.vercel.app/
-- **Video Demonstration:** https://www.youtube.com/watch?v=-lsbQbmuLBE
+- **Video Demonstration:** https://www.youtube.com/watch?v=Vl-3_LMXeF4
 - **GitHub Repository:** https://github.com/Ezequie1Sc/EarthTrend-NASA-2026
 - **Team Feynman:** https://www.spaceappschallenge.org/2026/find-a-team/feynman/
 - **NASA Space Apps:** https://www.spaceappschallenge.org/
