@@ -29,7 +29,7 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:4200",
         "http://127.0.0.1:4200",
-        "https://earth-trend-nasa.vercel.app",
+        "https://earth-trend-nasa-2026-5hti-cy53towhn.vercel.app",
     ],
     allow_origin_regex=(
         r"^https://[a-zA-Z0-9-]+"
